@@ -12,11 +12,11 @@ class Card(
     val archetype: String,
     val scale: Int,
     val linkval: Int,
-    val linkmarkers: Array<String>,
-    val sets: Array<Set>,
-    val banlists: BanlistInfo,
-    val images: Array<Image>,
-    val prices: Array<Price>
+    val linkmarkers: ArrayList<Linkmarker>?,
+    val cardsets: ArrayList<Cardset>?,
+    val banlists: BanlistInfo?,
+    val images: ArrayList<Image>?,
+    val prices: Price?
 ) {
-    val id: Long = 0
+    var id: Long = 0
 }

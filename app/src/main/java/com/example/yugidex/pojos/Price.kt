@@ -7,5 +7,5 @@ class Price(
     val amazon_price: String,
     val coolstuffinc_price: String
 ) {
-    val id: Long = 0
+    var id: Long = 0
 }

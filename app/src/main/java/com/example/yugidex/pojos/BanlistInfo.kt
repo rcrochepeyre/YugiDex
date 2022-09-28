@@ -5,5 +5,5 @@ class BanlistInfo(
     val ban_ocg: String,
     val ban_goat: String
 ) {
-    val id: Long = 0
+    var id: Long = 0
 }
