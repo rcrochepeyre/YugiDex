@@ -17,6 +17,7 @@ class CardDAO : DAO {
         open()
 
         val linkmarkerDAO = LinkmarkerDAO(context)
+        val cardsetDAO = CardsetDAO(context)
 
         val values = ContentValues()
         values.put(DBHelper.CARD_NAME, card.name)
@@ -44,6 +45,14 @@ class CardDAO : DAO {
             db.insert(DBHelper.CARD_LINKMARKERS_TABLE,null,valuesCardLinkmarkers)
         }
 
+        val valuesCardsetSet = ContentValues()
+        for (cardset in card.cardsets!!) {
+            val idCardset = cardsetDAO.add(cardset!!)
+            valuesCardsetSet.put(DBHelper.CARD_SET_CARD_ID,card.id)
+            valuesCardsetSet.put(DBHelper.CARD_SET_SET_ID,idCardset)
+            db.insert(DBHelper.CARD_SET_TABLE,null,valuesCardsetSet)
+        }
+
         close()
         return id
     }
@@ -53,6 +62,7 @@ class CardDAO : DAO {
         val banlistDAO = BanlistDAO(context)
         val priceDAO = PriceDAO(context)
         val cardLinkmarkersDAO = CardLinkmarkersDAO(context)
+        val cardCardsetDAO = CardCardsetDAO(context)
         open()
         val cursor = db.rawQuery(
             "select * from ${DBHelper.CARD_TABLE} where ${DBHelper.CARD_ID} = ?",
@@ -73,7 +83,7 @@ class CardDAO : DAO {
                 cursor.getInt(DBHelper.CARD_SCALE_COLUMN_INDEX),
                 cursor.getInt(DBHelper.CARD_LINKVAL_COLUMN_INDEX),
                 cardLinkmarkersDAO.find(cursor.getLong(DBHelper.CARD_ID_COLUMN_INDEX)),
-                null,
+                cardCardsetDAO.find(cursor.getLong(DBHelper.CARD_ID_COLUMN_INDEX)),
                 banlistDAO.find(cursor.getLong(DBHelper.CARD_BANLIST_INFO_ID_COLUMN_INDEX)),
                 null,
                 priceDAO.find(cursor.getLong(DBHelper.CARD_PRICE_ID_COLUMN_INDEX))

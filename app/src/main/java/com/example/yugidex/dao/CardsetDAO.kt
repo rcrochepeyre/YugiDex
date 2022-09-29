@@ -7,7 +7,7 @@ import com.example.yugidex.pojos.Cardset
 
 class CardsetDAO(context: Context) : DAO(DBHelper(context)) {
 
-    fun add(cardset: Cardset) {
+    fun add(cardset: Cardset) : Long {
         open()
 
         val values = ContentValues()
@@ -21,5 +21,53 @@ class CardsetDAO(context: Context) : DAO(DBHelper(context)) {
         cardset.id = id
 
         close()
+        return id
     }
+
+    fun find(id: Long): Cardset? {
+        var cardset: Cardset? = null
+        open()
+        val cursor = db.rawQuery(
+            "select * from ${DBHelper.SET_TABLE} where ${DBHelper.SET_ID} = ?",
+            arrayOf(id.toString())
+        )
+
+        if (cursor != null && cursor.moveToFirst()) {
+            cardset = Cardset(
+                cursor.getString(DBHelper.SET_NAME_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_CODE_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_RARITY_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_RARITY_CODE_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_PRICE_COLUMN_INDEX)
+            )
+            cardset.id = cursor.getLong(DBHelper.SET_ID_COLUMN_INDEX)
+        }
+
+        close()
+        return cardset
+    }
+
+    fun findByName(name: String): Cardset? {
+        var cardset: Cardset? = null
+        open()
+        val cursor = db.rawQuery(
+            "select * from ${DBHelper.SET_TABLE} where ${DBHelper.SET_NAME} = ?",
+            arrayOf(name)
+        )
+
+        if (cursor != null && cursor.moveToFirst()) {
+            cardset = Cardset(
+                cursor.getString(DBHelper.SET_NAME_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_CODE_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_RARITY_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_RARITY_CODE_COLUMN_INDEX),
+                cursor.getString(DBHelper.SET_PRICE_COLUMN_INDEX)
+            )
+            cardset.id = cursor.getLong(DBHelper.SET_ID_COLUMN_INDEX)
+        }
+
+        close()
+        return cardset
+    }
+
 }

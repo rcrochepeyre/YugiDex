@@ -19,16 +19,15 @@ class MainActivity : AppCompatActivity() {
 
         cardDAO = CardDAO(applicationContext)
         linkmarkerDAO = LinkmarkerDAO(applicationContext)
-        val linkmarkers2 = linkmarkerDAO.list()
         fillLinkmarkersTable(applicationContext)
         val linkmarkers = ArrayList<Linkmarker?>()
         linkmarkers.add(Linkmarker("Bottom"))
         linkmarkers.add(Linkmarker("Top"))
 
-        val cardsets = ArrayList<Cardset>()
+        val cardsets = ArrayList<Cardset?>()
         cardsets.add(Cardset("test", "test", "test", "test", "test"))
 
-        val images = ArrayList<Image>()
+        val images = ArrayList<Image?>()
         images.add(Image(1,"test","test"))
         val cardId = cardDAO.add(
             Card(
@@ -51,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             )
         )
         val card: Card? = cardDAO.find(cardId)
-        Log.d("card",card.toString())
     }
 
     fun fillLinkmarkersTable(context: Context) {
@@ -59,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         val linkmarkerDAO = LinkmarkerDAO(context)
 
         for (linkmarkerString in linkmarkersStrings) {
-            linkmarkerDAO.add(Linkmarker(linkmarkerString))
+            linkmarkerDAO.addIfNotExist(Linkmarker(linkmarkerString))
         }
     }
 }

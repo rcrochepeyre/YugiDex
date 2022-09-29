@@ -19,6 +19,19 @@ class LinkmarkerDAO(context: Context) : DAO(DBHelper(context)) {
         close()
     }
 
+    fun addIfNotExist(linkmarker: Linkmarker) {
+        open()
+
+        val values = ContentValues()
+        values.put(DBHelper.LINKMARKERS_NAME, linkmarker.name)
+
+        val id = db.insertWithOnConflict(DBHelper.LINKMARKERS_TABLE, null, values,4)
+        linkmarker.id = id
+
+        close()
+    }
+
+
     fun find(id: Long): Linkmarker? {
         var linkmarker: Linkmarker? = null
         open()
