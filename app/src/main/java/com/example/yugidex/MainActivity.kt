@@ -1,21 +1,27 @@
 package com.example.yugidex
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.yugidex.dao.CardDAO
+import com.example.yugidex.dao.LinkmarkerDAO
 import com.example.yugidex.pojos.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var cardDAO: CardDAO
+    private lateinit var linkmarkerDAO: LinkmarkerDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         cardDAO = CardDAO(applicationContext)
-        val linkmarkers = ArrayList<Linkmarker>()
+        linkmarkerDAO = LinkmarkerDAO(applicationContext)
+        val linkmarkers2 = linkmarkerDAO.list()
+        fillLinkmarkersTable(applicationContext)
+        val linkmarkers = ArrayList<Linkmarker?>()
         linkmarkers.add(Linkmarker("Bottom"))
         linkmarkers.add(Linkmarker("Top"))
 
@@ -46,5 +52,14 @@ class MainActivity : AppCompatActivity() {
         )
         val card: Card? = cardDAO.find(cardId)
         Log.d("card",card.toString())
+    }
+
+    fun fillLinkmarkersTable(context: Context) {
+        val linkmarkersStrings: Array<String> = arrayOf("Top","Left","Right","Bottom","Top-Left","Top-Right","Bottom-Left","Bottom-Right")
+        val linkmarkerDAO = LinkmarkerDAO(context)
+
+        for (linkmarkerString in linkmarkersStrings) {
+            linkmarkerDAO.add(Linkmarker(linkmarkerString))
+        }
     }
 }

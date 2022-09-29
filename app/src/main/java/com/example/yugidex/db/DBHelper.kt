@@ -11,7 +11,7 @@ class DBHelper(
     version: Int
 ) : SQLiteOpenHelper(context, name, factory, version) {
 
-    constructor(context: Context?) : this(context, "YugiDex.db", null, 1)
+    constructor(context: Context?) : this(context, "YugiDex.db", null, 2)
 
     companion object {
 
@@ -82,7 +82,7 @@ class DBHelper(
         const val CARD_TABLE = "cards"
         const val SET_TABLE = "sets"
         const val IMAGE_TABLE = "images"
-        const val PRICE_TABLE = "tables"
+        const val PRICE_TABLE = "prices"
         const val BANLIST_INFO_TABLE = "banlist_infos"
         const val LINKMARKERS_TABLE = "linkmarkers"
         const val CARD_SET_TABLE = "card_sets"
@@ -106,55 +106,55 @@ class DBHelper(
         const val CARD_BANLIST_INFO_ID_COLUMN_INDEX = 13
 
         //      SET TABLE COLUMN INDEX ATTRIBUTION
-        const val SET_ID_COLUMN_INDEX = 1
-        const val SET_NAME_COLUMN_INDEX = 2
-        const val SET_CODE_COLUMN_INDEX = 3
-        const val SET_RARITY_COLUMN_INDEX = 4
-        const val SET_RARITY_CODE_COLUMN_INDEX = 5
-        const val SET_PRICE_COLUMN_INDEX = 6
+        const val SET_ID_COLUMN_INDEX = 0
+        const val SET_NAME_COLUMN_INDEX = 1
+        const val SET_CODE_COLUMN_INDEX = 2
+        const val SET_RARITY_COLUMN_INDEX = 3
+        const val SET_RARITY_CODE_COLUMN_INDEX = 4
+        const val SET_PRICE_COLUMN_INDEX = 5
 
         //      IMAGE TABLE COLUMN INDEX ATTRIBUTION
-        const val IMAGE_ID_COLUMN_INDEX = 1
-        const val IMAGE_CARD_ID_COLUMN_INDEX = 2
-        const val IMAGE_URL_COLUMN_INDEX = 3
-        const val IMAGE_URL_SMALL_COLUMN_INDEX = 4
+        const val IMAGE_ID_COLUMN_INDEX = 0
+        const val IMAGE_CARD_ID_COLUMN_INDEX = 1
+        const val IMAGE_URL_COLUMN_INDEX = 2
+        const val IMAGE_URL_SMALL_COLUMN_INDEX = 3
 
         //        PRICE TABLE COLUMN INDEX ATTRIBUTION
-        const val PRICE_ID_COLUMN_INDEX = 1
-        const val PRICE_CARDMARKET_COLUMN_INDEX = 2
-        const val PRICE_TCGPLAYER_COLUMN_INDEX = 3
-        const val PRICE_EBAY_COLUMN_INDEX = 4
-        const val PRICE_AMAZON_COLUMN_INDEX = 5
-        const val PRICE_COOLSTUFFINC_COLUMN_INDEX = 6
+        const val PRICE_ID_COLUMN_INDEX = 0
+        const val PRICE_CARDMARKET_COLUMN_INDEX = 1
+        const val PRICE_TCGPLAYER_COLUMN_INDEX = 2
+        const val PRICE_EBAY_COLUMN_INDEX = 3
+        const val PRICE_AMAZON_COLUMN_INDEX = 4
+        const val PRICE_COOLSTUFFINC_COLUMN_INDEX = 5
 
         //        BANLIST_INFO TABLE COLUMN INDEX ATTRIBUTION
-        const val BANLIST_INFO_ID_COLUMN_INDEX = 1
-        const val BANLIST_INFO_TCG_COLUMN_INDEX = 2
-        const val BANLIST_INFO_OCG_COLUMN_INDEX = 3
-        const val BANLIST_INFO_GOAT_COLUMN_INDEX = 4
+        const val BANLIST_INFO_ID_COLUMN_INDEX = 0
+        const val BANLIST_INFO_TCG_COLUMN_INDEX = 1
+        const val BANLIST_INFO_OCG_COLUMN_INDEX = 2
+        const val BANLIST_INFO_GOAT_COLUMN_INDEX = 3
 
         //        LINKMARKERS TABLE COLUMN INDEX ATTRIBUTION
-        const val LINKMARKERS_ID_COLUMN_INDEX = 1
-        const val LINKMARKERS_NAME_COLUMN_INDEX = 2
+        const val LINKMARKERS_ID_COLUMN_INDEX = 0
+        const val LINKMARKERS_NAME_COLUMN_INDEX = 1
 
         //        CARD_SET TABLE COLUMN INDEX ATTRIBUTION
-        const val CARD_SET_ID_COLUMN_INDEX = 1
-        const val CARD_SET_CARD_ID_COLUMN_INDEX = 2
-        const val CARD_SET_SET_ID_COLUMN_INDEX = 3
+        const val CARD_SET_ID_COLUMN_INDEX = 0
+        const val CARD_SET_CARD_ID_COLUMN_INDEX = 1
+        const val CARD_SET_SET_ID_COLUMN_INDEX = 2
 
         //        CARD_IMAGE TABLE COLUMN INDEX ATTRIBUTION
-        const val CARD_IMAGE_ID_COLUMN_INDEX = 1
-        const val CARD_IMAGE_CARD_ID_COLUMN_INDEX = 2
-        const val CARD_IMAGE_IMAGE_ID_COLUMN_INDEX = 3
+        const val CARD_IMAGE_ID_COLUMN_INDEX = 0
+        const val CARD_IMAGE_CARD_ID_COLUMN_INDEX = 1
+        const val CARD_IMAGE_IMAGE_ID_COLUMN_INDEX = 2
 
         //        CARD_LINKMARKERS TABLE COLUMN INDEX ATTRIBUTION
-        const val CARD_LINKMARKERS_ID_COLUMN_INDEX = 1
-        const val CARD_LINKMARKERS_CARD_ID_COLUMN_INDEX = 2
-        const val CARD_LINKMARKERS_LINKMARKERS_ID_COLUMN_INDEX = 3
+        const val CARD_LINKMARKERS_ID_COLUMN_INDEX = 0
+        const val CARD_LINKMARKERS_CARD_ID_COLUMN_INDEX = 1
+        const val CARD_LINKMARKERS_LINKMARKERS_ID_COLUMN_INDEX = 2
 
     }
 
-    private val CARD_TABLE_CREATE = "CREATE TABLE $CARD_TABLE (" +
+    private val CARD_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS $CARD_TABLE (" +
             "$CARD_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "$CARD_NAME TEXT," +
             "$CARD_TYPE TEXT," +
